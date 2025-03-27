@@ -69,6 +69,25 @@ func SearchDetailUser(db *gorm.DB) gin.HandlerFunc {
 	}
 }
 
+func SearchDetailUserNative(db *gorm.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		user := repository.GetDetailUserNative(db, c.Query("id"))
+
+		var response io.Responsedetail
+
+		var detail io.Detailstatus
+		detail.Username = user.Username
+		detail.Name = user.Name
+		detail.Status = user.Statusemp
+		response.Data = append(response.Data, detail)
+
+		response.Status = constant.TRUE
+		response.Message = "Success"
+
+		c.JSON(http.StatusOK, response)
+	}
+}
+
 func LoginForm() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		username := c.PostForm("username")
@@ -86,6 +105,7 @@ type Userdata struct {
 	Id       string `json: id binding:"required`
 	Username string `json: username binding:"required`
 	Name     string `json: name binding:"required`
+	Statusid string `json: statusid binding:"required`
 }
 
 func SetUser(db *gorm.DB) gin.HandlerFunc {
@@ -94,7 +114,7 @@ func SetUser(db *gorm.DB) gin.HandlerFunc {
 		var userData Userdata
 		c.BindJSON(&userData)
 
-		user := model.TUser{Userid: userData.Id, Username: userData.Username, Name: userData.Name}
+		user := model.TUser{Userid: userData.Id, Username: userData.Username, Name: userData.Name, Statusid: userData.Statusid}
 		result := db.Create(&user)
 
 		var response io.Response

@@ -14,6 +14,7 @@ func GetData(incomingRoutes *gin.Engine, db *gorm.DB) {
 		api.GET("/users", service.GetUsers(db))
 		api.GET("/user/:id", service.GetDetailUser(db))
 		api.GET("/search", service.SearchDetailUser(db))
+		api.GET("/search-native", service.SearchDetailUserNative(db))
 	}
 }
 

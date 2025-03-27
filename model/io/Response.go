@@ -6,7 +6,19 @@ type Response struct {
 	Data    []Detail
 }
 
+type Responsedetail struct {
+	Status  bool
+	Message string
+	Data    []Detailstatus
+}
+
 type Detail struct {
 	Id   string
 	Info string
+}
+
+type Detailstatus struct {
+	Username string
+	Name     string
+	Status   string
 }

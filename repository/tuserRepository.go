@@ -23,3 +23,11 @@ func GetDetailUser(db *gorm.DB, id string) model.TUser {
 
 	return users
 }
+
+func GetDetailUserNative(db *gorm.DB, id string) model.UserDetail {
+	var usersDetail model.UserDetail
+	db.Raw("select a.username as username, a.name as name, b.status as statusemp from t_user a, t_status b "+
+		"where a.userid = ? and a.statusid = b.statusid", id).Scan(&usersDetail)
+
+	return usersDetail
+}
